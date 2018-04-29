@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. currentmodule:: {{cookiecutter.project_name}}
+.. currentmodule:: {{cookiecutter.project_slug}}
 .. moduleauthor:: {{cookiecutter.author_name}} <{{cookiecutter.author_email}}>
 
 This is the entry point for the command-line interface (CLI) application.

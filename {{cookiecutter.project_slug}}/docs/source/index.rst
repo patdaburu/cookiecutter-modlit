@@ -7,8 +7,8 @@
    :alt: modlit_template
    :align: right
 
-{{cookiecutter.project_name}}
-{% for _ in cookiecutter.project_name %}-{% endfor %}
+{{cookiecutter.project_slug}}
+{% for _ in cookiecutter.project_name %}={% endfor %}
 
 {{cookiecutter.project_description}}
 

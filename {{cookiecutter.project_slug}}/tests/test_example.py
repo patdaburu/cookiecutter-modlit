@@ -10,7 +10,7 @@ This is a sample test module.
 
 from parameterized import parameterized
 import unittest
-import modlit_template
+import {{cookiecutter.project_slug}}
 
 
 class ExampleTestSuite(unittest.TestCase):
@@ -25,8 +25,8 @@ class ExampleTestSuite(unittest.TestCase):
         Act: Retrieve the versions.
         Assert: The versions match the version numbers at the time of project creation.
         """
-        self.assertEqual('0.0.1', modlit_template.__version__)
-        self.assertEqual('0.0.1', modlit_template.__release__)
+        self.assertEqual('{{cookiecutter.project_version}}', {{cookiecutter.project_slug}}.__version__)
+        self.assertEqual('{{cookiecutter.project_version}}', {{cookiecutter.project_slug}}.__release__)
 
 
 class ParamaterizedExampleTestSuite(unittest.TestCase):

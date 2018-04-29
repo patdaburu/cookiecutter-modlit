@@ -37,7 +37,7 @@ _pysrc = os.path.abspath(os.path.join(os.path.abspath(__file__), '..', '..', '..
 # Insert it into the path.
 sys.path.insert(0, _pysrc)
 # Now we can import local modules.
-import {{cookiecutter.project_name}}
+import {{cookiecutter.project_slug}}
 
 # -- Document __init__ methods by default. --------------------------------
 # This section was added to allow __init__() to be documented automatically.

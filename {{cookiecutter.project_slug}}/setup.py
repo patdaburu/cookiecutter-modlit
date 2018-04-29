@@ -9,7 +9,7 @@ This file is used to create the package we'll publish to PyPI.
 """
 
 import os
-import {{cookiecutter.project_name}}
+import {{cookiecutter.project_slug}}
 from setuptools import setup, find_packages, Command  # Always prefer setuptools over distutils
 from codecs import open  # To use a consistent encoding
 from os import path
@@ -21,7 +21,7 @@ with open(path.join(here, 'README'), encoding='utf-8') as f:
     long_description = f.read()
 
 # Get the base version from the library.
-version={{cookiecutter.project_name}}.__version__
+version={{cookiecutter.project_slug}}.__version__
 
 # If the environment has a build number set...
 if os.getenv('buildnum') is not None:
@@ -29,7 +29,7 @@ if os.getenv('buildnum') is not None:
     version = "{version}.{buildnum}".format(version=version, buildnum=os.getenv('buildnum'))
 
 setup(
-  name='{{cookiecutter.project_name}}',
+  name='{{cookiecutter.project_slug}}',
   description="{{cookiecutter.project_description}}",
   long_description=long_description,
   packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
@@ -43,14 +43,14 @@ setup(
   ],
   entry_points="""
     [console_scripts]
-    {{cookiecutter.project_name}}={{cookiecutter.project_name}}.cli:cli
+    {{cookiecutter.project_slug}}={{cookiecutter.project_slug}}.cli:cli
   """,
   python_requires=">={{cookiecutter.project_version}}",
   license='{{cookiecutter.license}}',
   author='{{cookiecutter.author_name}}',
   author_email='{{cookiecutter.author_email}}',
-  url='http://{{cookiecutter.project_name}}.readthedocs.io/en/latest/index.html',  # Use the URL to the github repo.
-  download_url='https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/archive/{version}.tar.gz'.format(version=version),
+  url='http://{{cookiecutter.project_slug}}.readthedocs.io/en/latest/index.html',  # Use the URL to the github repo.
+  download_url='https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_slug}}/archive/{version}.tar.gz'.format(version=version),
   keywords=[
     # Add package keywords here.
   ],

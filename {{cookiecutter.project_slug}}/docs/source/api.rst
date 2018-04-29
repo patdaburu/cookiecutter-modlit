@@ -6,12 +6,12 @@
 API Documentation
 =================
 
-.. automodule:: {{cookiecutter.project_name}}
+.. automodule:: {{cookiecutter.project_slug}}
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: {{cookiecutter.project_name}}.cli
+.. automodule:: {{cookiecutter.project_slug}}.cli
     :members:
     :undoc-members:
     :show-inheritance:
