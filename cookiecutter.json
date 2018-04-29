@@ -2,10 +2,10 @@
 	"project_name": "my_modlit",
 	"project_version": "0.0.1",
 	"project_description": "This is my modlit project.",
-	"python_version": "3.6",
+	"python_version": ["3.6"],
 	"author_name": "my_name",
 	"author_email": "my_email",
-	"license": "MIT",
+	"license": ["None", "MIT"],
 	"github_user": "my_github_user"
 }
 

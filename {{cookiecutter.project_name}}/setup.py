@@ -67,7 +67,9 @@ setup(
     'Topic :: Software Development :: Libraries',
 
     # Pick your license as you wish (should match "license" above)
-    {{cookiecutter.if_license}}'License :: OSI Approved :: {{cookiecutter.license}} License',
+    {%- if cookiecutter.license != "None" -%}
+    'License :: OSI Approved :: {{cookiecutter.license}} License',
+    {%- endif -%}
 
     # Specify the Python versions you support here. In particular, ensure
     # that you indicate whether you support Python 2, Python 3 or both.

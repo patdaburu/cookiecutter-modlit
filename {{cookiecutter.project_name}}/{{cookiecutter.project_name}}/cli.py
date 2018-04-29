@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-.. currentmodule:: modlit_template
-.. moduleauthor:: AUTHOR <AUTHOR_EMAIL>
+.. currentmodule:: {{cookiecutter.project_name}}
+.. moduleauthor:: {{cookiecutter.author_name}} <{{cookiecutter.author_email}}>
 
 This is the entry point for the command-line interface (CLI) application.
 

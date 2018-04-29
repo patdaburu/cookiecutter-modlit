@@ -1,2 +1,2 @@
-# modlit_template
-DESCRIPTIION GOES HERE
+# {{cookiecutter.project_name}}
+{{cookiecutter.project_version}}

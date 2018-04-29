@@ -3,7 +3,7 @@
 
 """
 .. currentmodule:: test_example.py
-.. moduleauthor:: {{cookiecutter.author}} <{{cookiecutter.author_email}}>
+.. moduleauthor:: {{cookiecutter.author_name}} <{{cookiecutter.author_email}}>
 
 This is a sample test module.
 """
