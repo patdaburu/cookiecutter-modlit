@@ -19,7 +19,7 @@ import modlit.model
 from modlit.base import Base
 from sqlalchemy import create_engine
 import {{cookiecutter.project_slug}}.model
-from .api.app import app
+from .api.app import app, install_engine
 
 
 class Context(object):
@@ -68,6 +68,8 @@ def run(context: Context, host: str, port: int, db: str):
     modlit.model.load({{cookiecutter.project_slug}}.model)
     # Initialize the database.
     Base.metadata.create_all(engine)
+    # Install the engine for the application.
+    install_engine(engine)
     # Run the Flask app.
     app.run(debug=context.debug,
             host=host,
