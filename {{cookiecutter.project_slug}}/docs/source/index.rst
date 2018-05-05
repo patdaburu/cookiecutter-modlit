@@ -17,6 +17,7 @@
    :caption: Contents:
 
    api
+   models
    requirements
 
 
