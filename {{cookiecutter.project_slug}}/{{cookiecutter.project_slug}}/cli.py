@@ -24,7 +24,8 @@ from .api.app import app
 
 class Context(object):
     """
-    This is an information object that can be used to pass data between CLI functions.
+    This is an information object that can be used to pass data between CLI 
+    functions.
     """
     def __init__(self):  # Note that this object must have an empty constructor.
         self.debug: bool = False
