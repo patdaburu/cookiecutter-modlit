@@ -2,73 +2,75 @@
 # -*- coding: utf-8 -*-
 
 """
-.. currentmodule:: {{cookiecutter.project_slug}}
+.. currentmodule:: {{cookiecutter.project_slug}}.model
 .. moduleauthor:: {{cookiecutter.author_name}} <{{cookiecutter.author_email}}>
 
 This is the entry point for the command-line interface (CLI) application.
 
 .. note::
 
-    To learn more about Click visit the `project website <http://click.pocoo.org/5/>`_.  There is
-    also a very helpful `tutorial video <https://www.youtube.com/watch?v=kNke39OZ2k0>`_.
+    To learn more about Click visit the
+    `project website <http://click.pocoo.org/5/>`_.  There is also a very
+    helpful `tutorial video <https://www.youtube.com/watch?v=kNke39OZ2k0>`_.
 """
 
-import os
-from pathlib import Path
-from typing import TextIO
 import click
+import modlit.model
+from modlit.base import Base
+from sqlalchemy import create_engine
+import {{cookiecutter.project_slug}}.model
+from .api.app import app, install_engine
 
 
-class Info(object):
+class Context(object):
     """
-    This is an information object that can be used to pass data between CLI functions.
+    This is an information object that can be used to pass data between CLI 
+    functions.
     """
     def __init__(self):  # Note that this object must have an empty constructor.
-        self.verbose: bool = False
-        self.home_directory: os.PathLike = None
+        self.debug: bool = False
 
 
-# pass_info is a decorator for functions that pass 'Info' objects.
-pass_info = click.make_pass_decorator(Info, ensure=True) #: pylint: disable=invalid-name
+# contextual is a decorator for functions that pass 'Context' objects.
+contextual = click.make_pass_decorator(Context, ensure=True)  #: pylint: disable=invalid-name
 
 
 @click.group()
-@click.option('--verbose', is_flag=True, help="Turn on 'verbose' mode.")
-@click.option('--home-directory', type=click.Path())
-@pass_info
-def cli(info: Info, verbose: bool, home_directory: os.PathLike):
+@click.option('--debug', is_flag=True, help="enables debugging")
+@contextual
+def cli(context: Context, debug: bool):
     """
-    This is a sample Click command-line application.
+    This is the command line application for the {{cookiecutter.project_slug}}
+    project.
     """
-    # If we're running in verbose mode...
-    if verbose:
-        # ...let's announce that.
-        click.echo('The CLI is running in verbose mode.')
-    # We'll also add it to the collection of information for the future.
-    info.verbose = verbose
-    # If no home directory is specified...
-    if home_directory is None:
-        # ...we'll specify one now.
-        home_directory = Path.home()
-    # Anybody else using the information we're passing will know this as well.
-    info.home_directory = home_directory
+    context.debug = debug
 
 
-@cli.command()  # This is a sub-command of 'cli'.
-@click.option('--string', default='World', type=str,
-              metavar='<string>',
-              help="To whom would you like to say 'hello'?")
-@click.option('--repeat', default=1, type=int,
-              metavar='<repeat>',
-              help='How many times should the greeting be repeated?')
-@click.argument('out', type=click.File('w'), default='-', required=False)
-@pass_info
-def greet(info: Info, string: str, repeat: int, out: TextIO):
+@cli.command()
+@click.option('-h', '--host', default='127.0.0.1', help="the listening host")
+@click.option('-p', '--port', type=int, default=5000, help="the listening port")
+@click.option('-d', '--db',
+              default='postgresql://postgres:postgres@localhost/postgres',
+              help='the database URL')
+@contextual
+def run(context: Context, host: str, port: int, db: str):
     """
-    Print 'Hello <string>!' <repeat> times.
+    Run the REST API service.
+
+    :param context: the command-line run context
+    :param host: the listening host
+    :param port: the listening port
+    :param db: the URL of the database
     """
-    if info.verbose:
-        click.echo("'greet' is running in verbose mode.")
-    click.echo('Home directory is {}'.format(info.home_directory))
-    for _ in range(0, repeat):
-        click.echo('Hello {}!'.format(string), file=out)
+    # Create the engine.
+    engine = create_engine(db)
+    # Load the model.
+    modlit.model.load({{cookiecutter.project_slug}}.model)
+    # Initialize the database.
+    Base.metadata.create_all(engine)
+    # Install the engine for the application.
+    install_engine(engine)
+    # Run the Flask app.
+    app.run(debug=context.debug,
+            host=host,
+            port=port)
