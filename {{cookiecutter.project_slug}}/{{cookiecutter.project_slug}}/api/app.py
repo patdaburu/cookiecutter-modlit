@@ -10,11 +10,10 @@
 """
 # pylint: disable=invalid-name
 # pylint: disable=unused-import
-from modlit.api import ModlitFlask
+from modlit.api import ModlitFlask, load_routes
+from . import routes
 
 app: ModlitFlask = ModlitFlask(__name__.split('.')[0])  #: the Flask app itself
 
-# Import the routes modules.  (This may look unconventional, but it is in-line
-# with Flask's design.  Go to http://flask.pocoo.org/docs/1.0/patterns/packages/
-# and read the section on "Circular Imports" for more information.)
-import {{cookiecutter.project_slug}}.api.routes
+# Import the route modules.
+load_routes(routes)

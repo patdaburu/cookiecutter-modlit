@@ -6,7 +6,7 @@
 .. moduleauthor:: {{cookiecutter.author_name}} <{{cookiecutter.author_email}}>
 """
 from flask import jsonify
-import modlit_template as package
+from ... import __name__, __release__, __version__
 from ..app import app
 
 
@@ -18,7 +18,7 @@ def get_info():
     :return: information about the running API
     """
     return jsonify({
-        'package': package.__name__,
-        'version': package.__version__,
-        'release': package.__release__
+        'package': __name__,
+        'version': __version__,
+        'release': __release__
     })
