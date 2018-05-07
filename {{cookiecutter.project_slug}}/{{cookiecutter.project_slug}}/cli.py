@@ -18,13 +18,13 @@ import click
 import modlit.model
 from modlit.base import Base
 from sqlalchemy import create_engine
-import {{cookiecutter.project_slug}}.model
-from .api.app import app, install_engine
+from . import model
+from .api.app import app
 
 
 class Context(object):
     """
-    This is an information object that can be used to pass data between CLI 
+    This is an information object that can be used to pass data between CLI
     functions.
     """
     def __init__(self):  # Note that this object must have an empty constructor.
@@ -52,8 +52,10 @@ def cli(context: Context, debug: bool):
 @click.option('-d', '--db',
               default='postgresql://postgres:postgres@localhost/postgres',
               help='the database URL')
+@click.option('--create', is_flag=True,
+              help="create the model in the database")
 @contextual
-def run(context: Context, host: str, port: int, db: str):
+def run(context: Context, host: str, port: int, db: str, create: bool):
     """
     Run the REST API service.
 
@@ -61,15 +63,17 @@ def run(context: Context, host: str, port: int, db: str):
     :param host: the listening host
     :param port: the listening port
     :param db: the URL of the database
+    :param create: create the model in the database
     """
     # Create the engine.
     engine = create_engine(db)
     # Load the model.
-    modlit.model.load({{cookiecutter.project_slug}}.model)
-    # Initialize the database.
-    Base.metadata.create_all(engine)
-    # Install the engine for the application.
-    install_engine(engine)
+    modlit.model.load(model)
+    # If the caller indicated that we should, create the database tables.
+    if create:
+        Base.metadata.create_all(engine)
+    # Share the engine for the application.
+    app.install_engine(engine)
     # Run the Flask app.
     app.run(debug=context.debug,
             host=host,
