@@ -10,7 +10,7 @@ in our database's lifecycle.
 """
 from pathlib import Path
 from sqlalchemy.engine.base import Engine
-import sqlparse
+from modlit.db import exec_sql
 
 
 def preload(engine: Engine):
@@ -19,10 +19,14 @@ def preload(engine: Engine):
     set up properly.
 
     :param engine: the engine connected to the database
+    
+    .. note::
+    
+        The function will run the SQL commands in the 
+        {{cookiecutter.project_slug}}/db/preload.sql file.
     """
     preload_sql_file = Path(__file__).resolve().parent / 'preload.sql'
-    with engine.connect() as connection:
-        for sql_stmt in sqlparse.split(preload_sql_file.read_text().strip()):
-            connection.execute(sql_stmt)
+    exec_sql(engine, preload_sql_file)
+
 
 
