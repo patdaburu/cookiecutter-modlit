@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. currentmodule:: {{cookiecutter.project_slug}}.model
+.. currentmodule:: {{cookiecutter.project_slug}}.cli
 .. moduleauthor:: {{cookiecutter.author_name}} <{{cookiecutter.author_email}}>
 
 This is the entry point for the command-line interface (CLI) application.
@@ -15,11 +15,9 @@ This is the entry point for the command-line interface (CLI) application.
 """
 
 import click
-import modlit.model
-from modlit.base import Base
 from sqlalchemy import create_engine
-from . import model
 from .api.app import app
+from .db import lifecycle
 
 
 class Context(object):
@@ -67,14 +65,29 @@ def run(context: Context, host: str, port: int, db: str, create: bool):
     """
     # Create the engine.
     engine = create_engine(db)
-    # Load the model.
-    modlit.model.load(model)
-    # If the caller indicated that we should, create the database tables.
-    if create:
-        Base.metadata.create_all(engine)
+    # Load the model (and maybe create the physical database also).
+    lifecycle.load(engine, create=create)
     # Share the engine for the application.
     app.install_engine(engine)
     # Run the Flask app.
     app.run(debug=context.debug,
             host=host,
             port=port)
+
+
+@cli.command()
+@click.option('-d', '--db',
+              default='postgresql://postgres:postgres@localhost/postgres',
+              help='the database URL')
+@contextual
+def create(context: Context, db: str):
+    """
+    Create the model in the physical database.
+
+    :param context: the command-line run context
+    :param db: the URL of the database
+    """
+    # Create the engine.
+    engine = create_engine(db)
+    # Load the model (and maybe create the physical database also).
+    lifecycle.load(engine, create=create)
