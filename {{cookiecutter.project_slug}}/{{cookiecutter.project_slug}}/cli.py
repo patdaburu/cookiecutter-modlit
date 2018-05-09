@@ -13,11 +13,12 @@ This is the entry point for the command-line interface (CLI) application.
     `project website <http://click.pocoo.org/5/>`_.  There is also a very
     helpful `tutorial video <https://www.youtube.com/watch?v=kNke39OZ2k0>`_.
 """
-
+import logging
 import click
 from sqlalchemy import create_engine
 from .api.app import app
 from .db import lifecycle
+from . import __version__
 
 
 class Context(object):
@@ -42,6 +43,16 @@ def cli(context: Context, debug: bool):
     project.
     """
     context.debug = debug
+    if debug:
+        logging.basicConfig(level=logging.DEBUG)
+
+
+@cli.command()
+def version():
+    """
+    Display the current version of the library.
+    """
+    click.echo(__version__)
 
 
 @cli.command()
@@ -79,15 +90,16 @@ def run(context: Context, host: str, port: int, db: str, create: bool):
 @click.option('-d', '--db',
               default='postgresql://postgres:postgres@localhost/postgres',
               help='the database URL')
-@contextual
-def create(context: Context, db: str):
+def create(db: str):
     """
     Create the model in the physical database.
 
     :param context: the command-line run context
     :param db: the URL of the database
     """
+    click.echo(click.style(f'Creating version {__version__}', fg='blue'))
     # Create the engine.
     engine = create_engine(db)
     # Load the model (and maybe create the physical database also).
     lifecycle.load(engine, create=create)
+    click.echo(click.style('Done', fg='blue'))
