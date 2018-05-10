@@ -17,7 +17,7 @@ from os import path
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the relevant file
-with open(path.join(here, 'README'), encoding='utf-8') as f:
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 # Get the base version from the library.
@@ -39,7 +39,12 @@ setup(
     # Here are a couple of examples...
     # 'numpy>=1.13.3,<2',
     # 'measurement>=1.8.0,<2'
-    'Click'
+    'click>=6.7,<7',
+    'Flask>=1.0,<2',
+    'GeoAlchemy2>=0.4.2,<1',
+    'modlit>=0.0.4,<0.1',
+    'SQLAlchemy>=1.2.7,<2',
+    'sqlparse==0.2.4'
   ],
   entry_points="""
     [console_scripts]
