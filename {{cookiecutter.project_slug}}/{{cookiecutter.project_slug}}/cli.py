@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-.. currentmodule:: {{cookiecutter.project_slug}}.model
+.. currentmodule:: {{cookiecutter.project_slug}}.cli
 .. moduleauthor:: {{cookiecutter.author_name}} <{{cookiecutter.author_email}}>
 
 This is the entry point for the command-line interface (CLI) application.
@@ -13,13 +13,12 @@ This is the entry point for the command-line interface (CLI) application.
     `project website <http://click.pocoo.org/5/>`_.  There is also a very
     helpful `tutorial video <https://www.youtube.com/watch?v=kNke39OZ2k0>`_.
 """
-
+import logging
 import click
-import modlit.model
-from modlit.base import Base
 from sqlalchemy import create_engine
-from . import model
 from .api.app import app
+from .db import lifecycle
+from . import __version__
 
 
 class Context(object):
@@ -44,6 +43,16 @@ def cli(context: Context, debug: bool):
     project.
     """
     context.debug = debug
+    if debug:
+        logging.basicConfig(level=logging.DEBUG)
+
+
+@cli.command()
+def version():
+    """
+    Display the current version of the library.
+    """
+    click.echo(__version__)
 
 
 @cli.command()
@@ -67,14 +76,30 @@ def run(context: Context, host: str, port: int, db: str, create: bool):
     """
     # Create the engine.
     engine = create_engine(db)
-    # Load the model.
-    modlit.model.load(model)
-    # If the caller indicated that we should, create the database tables.
-    if create:
-        Base.metadata.create_all(engine)
+    # Load the model (and maybe create the physical database also).
+    lifecycle.load(engine, create=create)
     # Share the engine for the application.
     app.install_engine(engine)
     # Run the Flask app.
     app.run(debug=context.debug,
             host=host,
             port=port)
+
+
+@cli.command()
+@click.option('-d', '--db',
+              default='postgresql://postgres:postgres@localhost/postgres',
+              help='the database URL')
+def create(db: str):
+    """
+    Create the model in the physical database.
+
+    :param context: the command-line run context
+    :param db: the URL of the database
+    """
+    click.echo(click.style(f'Creating version {__version__}', fg='blue'))
+    # Create the engine.
+    engine = create_engine(db)
+    # Load the model (and maybe create the physical database also).
+    lifecycle.load(engine, create=create)
+    click.echo(click.style('Done', fg='blue'))
