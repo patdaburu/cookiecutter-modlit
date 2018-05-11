@@ -39,6 +39,11 @@ sys.path.insert(0, _pysrc)
 # Now we can import local modules.
 import {{cookiecutter.project_slug}}
 
+# Extract the modlit documentation images.
+import pathlib
+from modlit.sphinx.ext import modeldoc
+modeldoc.export_images(pathlib.Path(__file__).resolve().parent / modeldoc.IMAGES_PATH)
+
 # -- Document __init__ methods by default. --------------------------------
 # This section was added to allow __init__() to be documented automatically.
 # You can comment this section out to go back to the default behavior.
