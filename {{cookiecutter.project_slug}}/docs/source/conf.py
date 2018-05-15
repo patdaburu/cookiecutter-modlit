@@ -50,14 +50,14 @@ modeldoc.export_images(pathlib.Path(__file__).resolve().parent / modeldoc.IMAGES
 # See: http://stackoverflow.com/questions/5599254/how-to-use-sphinxs-autodoc-to-document-a-classs-init-self-method
 
 
-def skip(app, what, name, obj, skip, options):
-    if name == "__init__":
-        return False
-    return skip
-
-
-def setup(app):
-    app.connect("autodoc-skip-member", skip)
+# def skip(app, what, name, obj, skip, options):
+#     if name == "__init__":
+#         return False
+#     return skip
+#
+#
+# def setup(app):
+#     app.connect("autodoc-skip-member", skip)
 
 # http://docs.readthedocs.io/en/latest/faq.html
 
