@@ -7,13 +7,13 @@
 """
 from sqlalchemy import Column, String
 from geoalchemy2 import Geometry
-from modlit.base import Base, ModelMixin, AutoIdMixin
+from modlit.base import Base, ModelMixin, AutoGuidMixin
 from modlit.meta import column, ColumnMeta, Requirement, Source, Target, Usage
 from modlit.model import model
 
 
 @model(label='Places')
-class Place(Base, ModelMixin, AutoIdMixin):
+class Place(Base, ModelMixin, AutoGuidMixin):
     """
     This is a sample ORM class with a point geometry that represents places.
     """
