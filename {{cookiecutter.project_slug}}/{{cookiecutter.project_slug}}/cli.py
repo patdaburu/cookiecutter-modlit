@@ -102,4 +102,4 @@ def create(db: str):
     engine = create_engine(db)
     # Load the model (and maybe create the physical database also).
     lifecycle.load(engine, create=create)
-    click.echo(click.style('Done', fg='blue'))
+    click.echo(click.style('Done.', fg='blue'))
