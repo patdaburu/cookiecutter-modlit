@@ -20,3 +20,4 @@ UNDERLINE = '\033[4m'
 print(HEADER + 'Next Steps:' + ENDC)
 print('cd {{cookiecutter.project_slug}}')
 print('make venv')
+
