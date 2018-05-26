@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+.. currentmodule:: pre_gen_project
+.. moduleauthor:: Pat Daburu <pat@daburu.net>
+
+This is the script that runs before template generation.
+"""
 import re
 import sys
 

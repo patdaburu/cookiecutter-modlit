@@ -11,7 +11,8 @@ in our database's lifecycle.
 from pathlib import Path
 from sqlalchemy.engine.base import Engine
 from modlit.base import Base
-from modlit.db import exec_sql
+from modlit.db.sqlalchemy import exec_sql
+from modlit.db.postgres import touch_db
 import modlit.model
 from .. import model
 
@@ -28,6 +29,7 @@ def preload(engine: Engine):
         The function will run the SQL commands in the
         {{cookiecutter.project_slug}}/db/preload.sql file.
     """
+    touch_db(url=str(engine.url))
     preload_sql_file = Path(__file__).resolve().parent / 'preload.sql'
     exec_sql(engine, preload_sql_file)
 

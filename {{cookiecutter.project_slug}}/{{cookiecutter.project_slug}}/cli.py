@@ -13,6 +13,7 @@ This is the entry point for the command-line interface (CLI) application.
     `project website <http://click.pocoo.org/5/>`_.  There is also a very
     helpful `tutorial video <https://www.youtube.com/watch?v=kNke39OZ2k0>`_.
 """
+#: pylint: disable=line-too-long
 import logging
 import click
 from sqlalchemy import create_engine
@@ -59,7 +60,7 @@ def version():
 @click.option('-h', '--host', default='127.0.0.1', help="the listening host")
 @click.option('-p', '--port', type=int, default=5000, help="the listening port")
 @click.option('-d', '--db',
-              default='postgresql://postgres:postgres@localhost/postgres',
+              default='postgresql://postgres:postgres@127.0.0.1/{{cookiecutter.project_slug}}',
               help='the database URL')
 @click.option('--create', is_flag=True,
               help="create the model in the database")
@@ -88,7 +89,7 @@ def run(context: Context, host: str, port: int, db: str, create: bool):
 
 @cli.command()
 @click.option('-d', '--db',
-              default='postgresql://postgres:postgres@localhost/postgres',
+              default='postgresql://postgres:postgres@127.0.0.1/{{cookiecutter.project_slug}}',
               help='the database URL')
 def create(db: str):
     """
@@ -102,4 +103,4 @@ def create(db: str):
     engine = create_engine(db)
     # Load the model (and maybe create the physical database also).
     lifecycle.load(engine, create=create)
-    click.echo(click.style('Done', fg='blue'))
+    click.echo(click.style('Done.', fg='blue'))
