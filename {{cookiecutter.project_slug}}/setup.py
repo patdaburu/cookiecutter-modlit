@@ -42,7 +42,7 @@ setup(
     'click>=6.7,<7',
     'Flask>=1.0,<2',
     'GeoAlchemy2>=0.4.2,<1',
-    'modlit>=0.2.1,<0.3',
+    'modlit>=0.2.2,<0.3',
     'SQLAlchemy>=1.2.7,<2',
     'sqlparse==0.2.4'
   ],

@@ -2,7 +2,7 @@ click>=6.7,<7
 Flask>=1.0,<2
 GeoAlchemy2>=0.4.2,<1
 httpie>=0.9.9,<1
-modlit>=0.2.1,<0.3
+modlit>=0.2.2,<0.3
 parameterized>=0.6.1,<1
 pip-check-reqs==2.0.1
 pylint>=1.8.4,<2
@@ -16,4 +16,3 @@ sqlparse>=0.2.4,<1
 SQLAlchemy>=1.2.7,<2
 tox>=3.0.0,<4
 twine>=1.11.0,<2
-
