@@ -38,7 +38,7 @@ make install
 make build
 ```
 
-There are several other `make` targets defined as well.
+There are several other `make` targets so have a look at the `Makefile` if you're interested.
 
 #### Run the Command-Line App
 
