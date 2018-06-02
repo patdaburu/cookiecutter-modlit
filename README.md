@@ -21,7 +21,13 @@ You can build a project directly from the github repository.
 cookiecutter https://github.com/patdaburu/cookiecutter-modlit
 ```
 
-#### Run the `make` Targets
+#### Running the `make` Targets
+
+The template contains a cookiecutter [post-generate hook](http://cookiecutter.readthedocs.io/en/latest/advanced/hooks.html) that will attempt to do the following using targets in the project's [Makefile](https://www.gnu.org/software/make/):
+
+* create a virtual environment;
+* install the project's dependencies; and
+* build the command-line app.
 
 You may want to go about this differently according to your processes, but if you want to create a virtual environment for the project, install the dependencies, and set up the comman-line application, you can use the `make` targets defined in the project like so.
 
@@ -31,6 +37,8 @@ make venv
 make install
 make build
 ```
+
+There are several other `make` targets defined as well.
 
 #### Run the Command-Line App
 
@@ -64,7 +72,7 @@ Would you like to learn more?  Check out the links below!
 
 * **Pat Daburu** - *Initial work* - [github](https://github.com/patdaburu)
 
-See also the list of [contributors](https://github.com/cookiecutter-modlit/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/patdaburu/cookiecutter-modlit/graphs/contributors) who participated in this project.
 
 ## License
 
